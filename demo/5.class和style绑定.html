@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<!--class绑定-->
+<style>
+    .grey { color: grey; }
+    .red { color: red; }
+    .green { color: green; }
+</style>
+<!--<div id="demo" class="grey" v-bind:class="{red: isRed, green: isGreen}">class绑定demo</div>-->
+<!--<div id="demo" class="grey" v-bind:class="fontColor">class绑定demo</div>-->
+<div id="demo" class="grey" v-bind:class="classObj">class绑定demo</div>
+<script>
+    var vm = new Vue({
+        el: '#demo',
+        data: {
+            isRed: true,
+            isGreen: false,
+            fontColor: {red: true, green: true}
+        },
+        computed: {
+            classObj: function() {
+                return {
+                    red: this.isRed || this.isGreen,
+                    green: this.isRed && this.isGreen
+                }
+            }
+        }
+    })
+</script>
+<!--class绑定-->
+</body>
+</html>

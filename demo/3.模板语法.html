@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<!--过滤器-->
+<div id="app1">{{ message | firstUpper(' hah', a) }}</div>
+<script>
+    var vm = new Vue({
+        el: '#app1',
+        data: {
+            message: 'hello',
+            a: ' woqu'
+        },
+        filters: {
+            firstUpper: function(value, value2, value3) {
+                if (!value) return;
+                value = value.toString();
+                return value.charAt(0).toUpperCase() + value.slice(1) + value2 + value3;
+            }
+        }
+    });
+</script>
+<!--过滤器-->
+</body>
+</html>
