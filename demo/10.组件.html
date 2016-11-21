@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<!--props传递数据 开始-->
+<!--<div id="prop1">
+    <child message="hello"></child>
+</div>
+<script>
+    Vue.component('child', {
+        //声明props
+        props: ['message'],
+        template: '<span>{{ message }}</span>'
+    });
+    new Vue({
+        el: '#prop1'
+    });
+</script>-->
+
+<div id="app">
+    <my-component v-bind:my-name="name" v-bind:my-age="age"></my-component>
+</div>
+<template id="myComponent">
+    <table style="border:1px solid #ccc">
+        <tr>
+            <th colspan="2">
+                子组件数据
+            </th>
+        </tr>
+        <tr>
+            <td>my name</td>
+            <td>{{ myName }}</td>
+        </tr>
+        <tr>
+            <td>my age</td>
+            <td>{{ myAge }}</td>
+        </tr>
+    </table>
+</template>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            name: 'fengge',
+            age: 25
+        },
+        components: {
+            'my-component': {
+                template: '#myComponent',
+                props: ['myName', 'myAge']  //看做vm的子组件，如果要用父组件的数据，必须先在子组件中定义props属性
+            }
+        }
+    });
+</script>
+
+<!--props传递数据 结束-->
+
+<!--v-on绑定自定义事件 开始-->
+<div id="counter-event-example">
+    <p>{{ total }}</p>
+    <button-counter v-on:increment="incrementTotal"></button-counter>
+    <button-counter v-on:increment="incrementTotal"></button-counter>
+</div>
+<script>
+    Vue.component('button-counter', {
+        template: '<button v-on:click="increment">{{ counter }}</button>',
+        data: function() {
+            return {
+                counter: 0
+            }
+        },
+        methods: {
+            increment: function() {
+                this.counter += 1;
+                this.$emit('increment');    //触发自定义事件increment
+            }
+        }
+    });
+
+    new Vue({
+        el: '#counter-event-example',
+        data: {
+            total: 0
+        },
+        methods: {
+            incrementTotal: function() {
+                this.total += 1;
+            }
+        }
+    });
+</script>
+<!--v-on绑定自定义事件 结束-->
+
+<!--使用自定义事件的表单输入组件 开始-->
+<div id="app2">
+    <currency-input v-model="price"></currency-input>
+</div>
+
+<script>
+    Vue.component('currency-input', {
+        template: '\
+            <span>\
+              $\
+              <input\
+                ref="input"\
+                v-bind:value="value"\
+                v-on:input="updateValue($event.target.value)"\
+              >\
+            </span>\
+        ',
+        props: ['value'],
+        methods: {
+            updateValue: function (value) {
+                var formattedValue;
+                if ( value.indexOf('.') !== -1 ) {
+                    formattedValue = value.trim().slice(0, value.indexOf('.') + 3)
+                    debugger;
+                } else {
+                    formattedValue = value.trim();
+                }
+                /*if (formattedValue !== value) {
+                    this.$refs.input.value = formattedValue
+                }*/
+                this.$emit('input', Number(formattedValue))
+            }
+        }
+    });
+    new Vue({
+        el: '#app2',
+        data: {
+            price: '0'
+        }
+    });
+</script>
+<!--使用自定义事件的表单输入组件 结束-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

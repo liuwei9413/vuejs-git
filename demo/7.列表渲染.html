@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<!--对象迭代 开始-->
+<ul id="report-object">
+    <li v-for="(value, key, index) in object">
+        {{ key }} : {{ value }} : {{ index }}
+    </li>
+</ul>
+<script>
+    var vm = new Vue({
+        el: '#report-object',
+        data: {
+            object: {
+                firstName: 'fengge',
+                lastName: '9413',
+                age: 30
+            }
+        }
+    });
+</script>
+<!--对象迭代 结束-->
+
+<!--整数迭代 开始-->
+<div id="app">
+    <span v-for="n in 10">{{ n }}</span>
+</div>
+<script>
+    var vm2 = new Vue({
+        el: '#app'
+    });
+</script>
+<!--整数迭代 结束-->
+
+<!--组件和v-for 开始-->
+<div id="todo-list-example">
+    <input type="text" v-model="newTodoText" v-on:keyup.enter="addNewTodo" placeholder="Add a todo">
+    <ul>
+        <li is="todo-item" v-for="(todo,index) in todos" v-bind:title="todo" v-on:remove="todos.splice(index, 1)"></li>
+    </ul>
+</div>
+<script>
+    Vue.component('todo-item', {
+        template: '\
+            <li>{{ title }}\
+                <button v-on:click="$emit(\'remove\')">X</button>\
+            </li> \
+        ',
+        props: ['title']
+    });
+    var vm4 = new Vue({
+        el: '#todo-list-example',
+        data: {
+            newTodoText: '',
+            todos: [
+                    '111111111',
+                    '22222222',
+                    '333333333'
+            ]
+        },
+        methods: {
+            addNewTodo: function() {
+                this.todos.push(this.newTodoText);
+                this.newTodoText = '';
+            }
+        }
+    });
+</script>
+
+<!--组件和v-for 结束-->
+
+<!--显示过滤/排序结果 开始-->
+<ul id="array-filter">
+    <li v-for="n in evenNumbers">{{ n }}</li>
+</ul>
+<script>
+    var vm5 = new Vue({
+        el: '#array-filter',
+        data: {
+            numbers: [1, 2, 3, 4, 5]
+        },
+        computed: {
+            evenNumbers: function() {
+                return this.numbers.filter(function(number) {
+                    return number % 2 === 0
+                })
+            }
+        }
+    });
+</script>
+<!--显示过滤/排序结果 结束-->
+
+
+
+
+
+
+
+
+</body>
+</html>

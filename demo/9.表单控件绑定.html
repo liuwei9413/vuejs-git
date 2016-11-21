@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<!--绑定 value 到 Vue 实例的一个动态属性上 开始-->
+<div id="app1">
+    <input type="checkbox" v-model="toggle" v-bind:true-value="a" v-bind:false-value="b" v-on:change="isA">
+</div>
+<script>
+    var vm1 = new Vue({
+        el: '#app1',
+        data: {
+            toggle: '1',
+            a: 'i am a',
+            b: 'i am b'
+        },
+        methods: {
+            isA: function() {
+                console.log( this.toggle === this.a )
+            }
+        }
+    })
+</script>
+<!--绑定 value 到 Vue 实例的一个动态属性上 结束-->
+
+<!--修饰符 开始-->
+<div id="app2">
+    <input type="text" v-model.lazy="text">
+    <input v-model.number="num" type="number">
+    <input v-model.trim="msg" type="text">
+    <p>text: {{ text }}</p>
+    <p>num: {{ num }}</p>
+    <p style="background:#ccc;">trim去除首尾空格：{{ msg }}</p>
+</div>
+<script>
+    var vm2 = new Vue({
+        el: '#app2',
+        data: {
+            text: '',
+            num: '',
+            msg: ''
+        }
+    });
+</script>
+
+<!--修饰符 结束-->
+</body>
+</html>
